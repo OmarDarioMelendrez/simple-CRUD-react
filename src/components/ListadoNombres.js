@@ -11,9 +11,17 @@ const ListadoNombres = () => {
         id: uniqid(),
         tituloNombre: nombre
     }
-    setListaNombres([...listaNombres, nuevoNombre]);
-    setNombre("");
+    if (nombre.trim() !== "") {
+        setListaNombres([...listaNombres, nuevoNombre]);
+        setNombre(""); 
+    }
   };
+
+  const deleteNombre = (id) => {
+      const nuevaArray = listaNombres.filter(item => item.id !== id);
+      setListaNombres(nuevaArray);
+  }
+  
 
   return (
     <div>
@@ -22,9 +30,12 @@ const ListadoNombres = () => {
         <div className="col">
           <h3 className="text-center">Listado de nombres</h3>
           <ul className="list-group">
-            {listaNombres.map(({tituloNombre, id}) => (
-              <li className="list-group-item" key={id}>{tituloNombre}</li>
-            ))}
+            {listaNombres.map(({tituloNombre, id}) => 
+              <li className="list-group-item" key={id}>{tituloNombre}
+              <button onClick={() => {deleteNombre(id)}} className="btn btn-danger float-right">Borrar</button>
+              </li>
+              
+            )}
           </ul>
         </div>
         <div className="col">
